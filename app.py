@@ -9,7 +9,7 @@ myheading1='Predicting Home Sale Prices in Ames, Iowa'
 image1='ames_welcome.jpeg'
 tabtitle = 'Ames Housing'
 sourceurl = 'http://jse.amstat.org/v19n3/decock.pdf'
-githublink = 'https://github.com/plotly-dash-apps/501-linear-reg-ames-housing'
+githublink = 'https://github.com/farkasdilemma/501-linear-reg-ames-housing/blob/main/app.py'
 
 
 ########### Initiate the app
@@ -37,6 +37,8 @@ app.layout = html.Div(children=[
                 dcc.Input(id='SingleFam', value=0, type='number', min=0, max=1, step=1),
                 html.Div('Large Neighborhood:'),
                 dcc.Input(id='LargeNeighborhood', value=0, type='number', min=0, max=1, step=1),
+                html.Div('Year Remodeled:'),
+                dcc.Input(id='YearRemodel', value=2010, type='number', min=0, max=2022, step=1),
 
             ], className='four columns'),
             html.Div([
@@ -57,7 +59,7 @@ app.layout = html.Div(children=[
     html.Br(),
     html.Br(),
     html.H4('Regression Equation:'),
-    html.Div('Predicted Price = (- $1,360.5K Baseline) + ($0.7K * Year Built) + ($12.7K * Bathrooms) + (- $7.7K * Bedrooms) + ($0.049K * Total Square Feet) + ($ 25.2K * Single Family Home) + (- $6.6 K * Large Neighborhood)'),
+    html.Div('Predicted Price = (- $1,758.9K Baseline) + ($0.4K * Year Built) + ($9.4K * Bathrooms) + (- $9.5K * Bedrooms) + ($0.059K * Total Square Feet) + ($ 24.5K * Single Family Home) + (- $6 K * Large Neighborhood) + (0.5K * Year Remodeled)'),
     html.Br(),
     html.A('Google Spreadsheet', href='https://docs.google.com/spreadsheets/d/1q2ustRvY-GcmPO5NYudvsBEGNs5Na5p_8LMeS4oM35U/edit?usp=sharing'),
     html.Br(),
@@ -78,13 +80,13 @@ app.layout = html.Div(children=[
     State(component_id='TotalSF', component_property='value'),
     State(component_id='SingleFam', component_property='value'),
     State(component_id='LargeNeighborhood', component_property='value')
-
+    State(component_id='YearRemodel', component_property='value')
 )
 def ames_lr_function(clicks, YearBuilt,Bathrooms,BedroomAbvGr,TotalSF,SingleFam,LargeNeighborhood):
     if clicks==0:
         return "waiting for inputs"
     else:
-        y = [-1360501.3809 + 704.4287*YearBuilt + 12738.4775*Bathrooms + -7783.1712*BedroomAbvGr + 49.824*TotalSF+ 25282.091*SingleFam+ -6637.2636*LargeNeighborhood]
+        y = [-1758854.3428 + 425.1386*YearBuilt + 9401.5117*Bathrooms + -9492.3692*BedroomAbvGr + 58.767*TotalSF+ 24508.4619*SingleFam+ -5982.0413*LargeNeighborhood+ 472.8435*YearRemodAdd ]
         formatted_y = "${:,.2f}".format(y[0])
         return formatted_y
 
